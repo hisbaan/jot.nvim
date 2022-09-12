@@ -58,11 +58,13 @@ function M.search()
         prompt = "Select note to edit",
     },
         function(choice)
-            if config.hide_search_dir then
-                choice = vim.fn.resolve(config.search_dir .. "/" .. choice)
+            if choice ~= nil then
+                if config.hide_search_dir then
+                    choice = vim.fn.resolve(config.search_dir .. "/" .. choice)
+                end
+                vim.cmd(":e " .. choice)
+                config.post_open_hook()
             end
-            vim.cmd(":e " .. choice)
-            config.post_open_hook()
         end
     )
 end
